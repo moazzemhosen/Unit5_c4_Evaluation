@@ -1,5 +1,3 @@
-import './App.css'
-
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
@@ -7,21 +5,30 @@ import { NewOrder } from "./components/NewOrder";
 import { Orders } from "./components/Orders";
 import { ProtectedRoute } from "./components/ProtextedRoute";
 import { Link, Routes, Route } from "react-router-dom";
+import "./App.css";
+import { useSelector } from "react-redux";
 
 function App() {
+  const loginStatus = useSelector((store) => store.login);
+  //  console.log(loginStatus);
+
   return (
     <div className="App">
-      <div>
+      <div className="navbar">
         <Link className="nav-home" to="/">
           Home
         </Link>
         {/* Show either login or logout below */}
-        <Link className="nav-logout" to="/logout">
-          Logout
-        </Link>
-        <Link className="nav-login" to="/login">
-          Login
-        </Link>
+
+        {loginStatus ? (
+          <Link className="nav-logout" to="/logout">
+            Logout
+          </Link>
+        ) : (
+          <Link className="nav-login" to="/login">
+            Login
+          </Link>
+        )}
       </div>
 
       <Routes>
@@ -37,7 +44,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
         <Route
-          path="/users/:id"
+          path="/neworder"
           element={
             <ProtectedRoute>
               <NewOrder />
@@ -45,7 +52,7 @@ function App() {
           }
         ></Route>
         <Route
-          path="/users/:id"
+          path="/orders"
           element={
             <ProtectedRoute>
               <Orders />

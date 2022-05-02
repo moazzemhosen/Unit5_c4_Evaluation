@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 export const NewOrder = () => {
   // Get data of only this user. store it in redux
   // GET /orders?owner_name=john will give you all order of user john
   //  on submit click create a new order, new order has status `Not Accepted`
+
+  const [data, setData] = useState([]);
+
   return (
     <div>
       <div className="form">
@@ -37,14 +42,19 @@ export const NewOrder = () => {
         </button>
 
         {/* Here create a div for every oreder, filter them before based on `showUnfinished` */}
-        <div className="past-orders">
-          <span className="id"></span>. <span className="problem"></span>{" "}
-          <span className="cost">
-            {/* if status is not accepted then keep it empty otherwise show cost like $1234 */}
-          </span>
-          <p className="status">Status: </p>
-          <hr />
-        </div>
+        {data.map((e) => {
+          return (
+            <div className="past-orders">
+              <span className="id">{e.id}</span>.{" "}
+              <span className="problem">{e.problem}</span>{" "}
+              <span className="cost">
+                {/* if status is not accepted then keep it empty otherwise show cost like $1234 */}
+              </span>
+              <p className="status">Status: {e.status}</p>
+              <hr />
+            </div>
+          );
+        })}
       </div>
     </div>
   );
